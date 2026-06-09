@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="tr" data-bs-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Giriş Yap - Finans Takip</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <script>
+        const savedTheme = localStorage.getItem('theme') || 'light';
+        document.documentElement.setAttribute('data-bs-theme', savedTheme);
+    </script>
+</head>
+<body class="bg-body-tertiary d-flex align-items-center justify-content-center vh-100">
+
+    <div class="container" style="max-width: 400px;">
+        <div class="card shadow border-0">
+            <div class="card-body p-4">
+                <div class="text-center mb-4">
+                    <i class="bi bi-wallet2 text-success fs-1"></i>
+                    <h3 class="fw-bold mt-2">Giriş Yap</h3>
+                    <p class="text-muted small">Finans Takip uygulamasına hoş geldiniz.</p>
+                </div>
+                
+                {% with messages = get_flashed_messages(with_categories=true) %}
+                    {% if messages %}
+                        {% for category, message in messages %}
+                            <div class="alert alert-{{ 'success' if category == 'success' else 'danger' }} alert-dismissible fade show p-2 text-center small" role="alert">
+                                {{ message }}
+                                <button type="button" class="btn-close" style="padding: 0.75rem;" data-bs-dismiss="alert" aria-label="Close"></button>
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+                {% endwith %}
+
+                <form method="POST" action="{{ url_for('login') }}">
+                    <div class="mb-3">
+                        <label for="username" class="form-label fw-bold small text-muted">Kullanıcı Adı</label>
+                        <div class="input-group">
+                            <span class="input-group-text bg-body-secondary"><i class="bi bi-person"></i></span>
+                            <input type="text" class="form-control bg-body-tertiary" id="username" name="username" required placeholder="Kullanıcı adınızı girin">
+                        </div>
+                    </div>
+                    <div class="mb-4">
+                        <label for="password" class="form-label fw-bold small text-muted">Şifre</label>
+                        <div class="input-group">
+                            <span class="input-group-text bg-body-secondary"><i class="bi bi-lock"></i></span>
+                            <input type="password" class="form-control bg-body-tertiary" id="password" name="password" required placeholder="Şifrenizi girin">
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-success w-100 fw-bold fs-5 shadow-sm">Giriş Yap</button>
+                </form>
+                
+                <div class="text-center mt-4 pt-3 border-top">
+                    <p class="mb-0 text-muted small">Hesabınız yok mu? <a href="{{ url_for('register') }}" class="text-success fw-bold text-decoration-none">Kayıt Ol</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

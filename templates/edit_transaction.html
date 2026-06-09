@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="tr" data-bs-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>İşlemi Düzenle - Finans Takip</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <script>
+        // Tema bilgisini lokalden al
+        const savedTheme = localStorage.getItem('theme') || 'light';
+        document.documentElement.setAttribute('data-bs-theme', savedTheme);
+    </script>
+</head>
+<body class="bg-body-tertiary d-flex align-items-center justify-content-center vh-100">
+
+    <div class="container" style="max-width: 450px;">
+        <div class="card shadow-sm border-0">
+            <div class="card-body p-4">
+                <h4 class="card-title text-center mb-4 fw-bold"><i class="bi bi-pencil-square me-2 text-warning"></i>İşlemi Düzenle</h4>
+                
+                <form method="POST" action="{{ url_for('edit_transaction', id=t.id) }}">
+                    <div class="mb-3">
+                        <label for="type" class="form-label fw-bold small text-muted">İşlem Tipi</label>
+                        <select class="form-select bg-body-tertiary" id="type" name="type" required>
+                            <option value="Gider" {% if t.type == 'Gider' %}selected{% endif %}>Gider</option>
+                            <option value="Gelir" {% if t.type == 'Gelir' %}selected{% endif %}>Gelir</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="category_name" class="form-label fw-bold small text-muted">Kategori</label>
+                        <input type="text" class="form-control bg-body-tertiary" id="category_name" name="category_name" value="{{ t.category_name }}" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="amount" class="form-label fw-bold small text-muted">Miktar (₺)</label>
+                        <input type="number" class="form-control bg-body-tertiary" id="amount" name="amount" step="0.01" min="0.01" value="{{ t.amount }}" required>
+                    </div>
+                    <div class="mb-4">
+                        <label for="description" class="form-label fw-bold small text-muted">Açıklama</label>
+                        <input type="text" class="form-control bg-body-tertiary" id="description" name="description" value="{{ t.description }}">
+                    </div>
+                    <button type="submit" class="btn btn-warning w-100 fw-bold mb-2"><i class="bi bi-save me-1"></i>Değişiklikleri Kaydet</button>
+                    <a href="{{ url_for('dashboard') }}" class="btn btn-outline-secondary w-100 fw-bold"><i class="bi bi-arrow-left me-1"></i>İptal</a>
+                </form>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>
